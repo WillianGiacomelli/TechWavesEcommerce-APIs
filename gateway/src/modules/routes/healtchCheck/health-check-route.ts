@@ -2,7 +2,7 @@ import { Router } from "express";
 require("dotenv").config();
 const httpProxy = require('express-http-proxy');
 
-const customerRouter = Router();
+const healthCheckRouter = Router();
 
 const customerServiceProxy = httpProxy(process.env.CUSTOMER_API_URL, {
     timeout: 5000,
@@ -12,7 +12,6 @@ const customerServiceProxy = httpProxy(process.env.CUSTOMER_API_URL, {
     }
 });
 
-customerRouter.get("/customer", (req, res, next) => customerServiceProxy(req,res,next));
-customerRouter.post("/customer", (req, res, next) => customerServiceProxy(req,res,next));
+healthCheckRouter.get("/health-check", (req, res, next) => customerServiceProxy(req,res,next));
 
-export default customerRouter;
+export default healthCheckRouter;
