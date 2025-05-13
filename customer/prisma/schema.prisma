@@ -26,8 +26,8 @@ model User {
     Contact Contact?
     Address Address?
 
-    roleId Int @unique
-    UserRole UserRole @relation(fields:[roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    roleId Int
+    UserRole UserRole @relation(fields:[roleId], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
     @@map("user.user")
 }
@@ -36,7 +36,7 @@ model UserRole {
   id Int @id @default(autoincrement())
   role Role
 
-  User User?
+  User User[]
 
   @@map("user.role")
 }
