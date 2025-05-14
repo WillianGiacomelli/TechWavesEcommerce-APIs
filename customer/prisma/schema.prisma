@@ -23,7 +23,7 @@ model User {
     
 
     Login Login?
-    Contact Contact?
+    Contact Contact[]
     Address Address?
 
     roleId Int
@@ -45,7 +45,7 @@ model Contact {
   id Int @id @default(autoincrement())
   cellPhone String @db.VarChar(21)
 
-  userId Int @unique
+  userId Int 
   User User @relation(fields:[userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("user.contact")

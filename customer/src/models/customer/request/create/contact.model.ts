@@ -1,3 +1,4 @@
 export default class ContactModel{
-    cellphone: string;
+    cellPhone: string;
+    User: object;
 }

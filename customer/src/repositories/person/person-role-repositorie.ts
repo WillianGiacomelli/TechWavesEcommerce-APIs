@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import prisma from "../../database";
 import PersonRoleModel from "../../models/person/role/personRole.model";
 
-export default class PersonRoleRepository  extends BaseRepository<any>{
+export default class PersonRoleRepository  extends BaseRepository<PersonRoleModel>{
 
     constructor(model: keyof PrismaClient) {
         super(model);

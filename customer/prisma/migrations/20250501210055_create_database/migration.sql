@@ -18,7 +18,6 @@ CREATE TABLE `user.contact` (
     `cellPhone` VARCHAR(21) NOT NULL,
     `userId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `user.contact_userId_key`(`userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -64,6 +63,8 @@ ALTER TABLE `user.contact` ADD CONSTRAINT `user.contact_userId_fkey` FOREIGN KEY
 
 -- AddForeignKey
 ALTER TABLE `user.login` ADD CONSTRAINT `user.login_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user.user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE `user.contact` ADD CONSTRAINT `user.contact_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user.user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE `user.address` ADD CONSTRAINT `user.address_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user.user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

@@ -1,7 +1,6 @@
-import { DefaultArgs, PrismaClientOptions } from "@prisma/client/runtime/library";
+import { PrismaClient } from '@prisma/client';
 import PersonModel from "../../models/customer/request/create/person.model";
 import BaseRepository from "../base/baseRepositorie";
-import { PrismaClient } from "@prisma/client";
 import prisma from "../../database";
 
 export default class PersonRepository  extends BaseRepository<PersonModel>{
