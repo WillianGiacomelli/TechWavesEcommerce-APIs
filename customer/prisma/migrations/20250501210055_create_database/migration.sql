@@ -1,4 +1,12 @@
 -- CreateTable
+CREATE TABLE `user.role` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `role` ENUM('USER', 'MANAGER', 'ADMIN') NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `user.user` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
@@ -6,7 +14,7 @@ CREATE TABLE `user.user` (
     `cpf` VARCHAR(11) NOT NULL,
     `sex` CHAR(2) NOT NULL,
     `birthDate` DATE NOT NULL,
-    `role` ENUM('USER', 'MANAGER', 'ADMIN') NOT NULL DEFAULT 'USER',
+    `roleId` INTEGER NOT NULL,
 
     UNIQUE INDEX `user.user_cpf_key`(`cpf`),
     PRIMARY KEY (`id`)
@@ -58,8 +66,11 @@ CREATE TABLE `address.complement` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateIndex
+CREATE UNIQUE INDEX `user.user_roleId_key` ON `user.user`(`roleId`);
+
 -- AddForeignKey
-ALTER TABLE `user.contact` ADD CONSTRAINT `user.contact_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user.user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `user.user` ADD CONSTRAINT `user.user_roleId_fkey` FOREIGN KEY (`roleId`) REFERENCES `user.role`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE `user.login` ADD CONSTRAINT `user.login_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user.user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

@@ -78,8 +78,6 @@ export default class CustomerService{
             throw new Error("Error creating user address");
         }
 
-        console.log(data.address);
-
         const addressComplement = this._addressComplementRepository.create({
             addressId: userAddress.id,
             state: data.address.state,
