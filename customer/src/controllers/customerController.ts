@@ -10,8 +10,7 @@ const createCustomer = async (req: Request, res: Response) => {
 
         const data = await customerService.createCustomer(body);
 
-        return res.status(200).json(data);
-        // return res.status(200).json(ApiResponse.success("", [data]));
+        return res.status(200).json(ApiResponse.success("", [data]));
     }catch(error: any){
         error
         res.status(500).json(ApiResponse.error(error.message));

@@ -47,4 +47,6 @@ const customerServiceProxy = httpProxy(customerApiUrl, {
 customerRouter.get('/customer', customerServiceProxy);
 customerRouter.post('/customer', customerServiceProxy);
 
+customerRouter.get('/customer/health-check', customerServiceProxy);
+
 export default customerRouter;

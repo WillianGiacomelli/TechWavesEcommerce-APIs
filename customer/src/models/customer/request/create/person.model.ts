@@ -1,7 +1,7 @@
 export default class PersonModel{
     id: number;
     name: string;
-    lastName:string;
+    middleName:string;
     cpf: string;
     birthDate: Date;
     gender: string; 

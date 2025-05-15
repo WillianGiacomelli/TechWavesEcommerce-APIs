@@ -3,8 +3,8 @@ import "dotenv/config";
 
 const healthCheckRouter = Router();
 
-healthCheckRouter.get("/health-check", (req, res, next) => {
-    res.status(200).json("API is working successfully")
+healthCheckRouter.get("/customer/health-check", (req, res, next) => {
+    res.status(200).json("API customer is working successfully")
 });
 
 export default healthCheckRouter;

@@ -12,7 +12,7 @@ CREATE TABLE `user.user` (
     `name` VARCHAR(255) NOT NULL,
     `middleName` VARCHAR(255) NOT NULL,
     `cpf` VARCHAR(11) NOT NULL,
-    `sex` CHAR(2) NOT NULL,
+    `gender` CHAR(2) NOT NULL,
     `birthDate` DATE NOT NULL,
     `roleId` INTEGER NOT NULL,
 

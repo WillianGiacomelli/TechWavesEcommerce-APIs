@@ -6,6 +6,7 @@ import { generateHash } from "../utils/hashProvider";
 import PersonContactRepository from "../repositories/person/person-contact-repositorie";
 import AddressRepository from "../repositories/address/address-repositorie";
 import AddressComplementRepository from "../repositories/address/address-complement-repositorie";
+import CustomerCreatedModel from "../models/customer/response/customerCreated.model";
 
 export default class CustomerService{
     private personRepository: PersonRepository;
@@ -24,7 +25,7 @@ export default class CustomerService{
         this._addressComplementRepository = new AddressComplementRepository('addressComplement');
     }
 
-    async createCustomer(data: CustomerCreateModel) : Promise<any> {
+    async createCustomer(data: CustomerCreateModel) : Promise<CustomerCreatedModel> {
 
         const roleId = await this.personRoleRepository.findRoleByText("USER");
 
@@ -88,7 +89,12 @@ export default class CustomerService{
             complement: data.address.complement
         });
 
-        return addressComplement;
+        const userCreatedResponse = new CustomerCreatedModel();
+        userCreatedResponse.id = userCreated.id;
+        userCreatedResponse.name = userCreated.name + " " + userCreated.middleName;
+        userCreatedResponse.email = data.login.email;
+
+        return userCreatedResponse;
     }
 
 }
