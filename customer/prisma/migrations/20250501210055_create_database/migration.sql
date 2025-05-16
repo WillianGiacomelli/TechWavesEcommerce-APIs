@@ -66,12 +66,8 @@ CREATE TABLE `address.complement` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- CreateIndex
-CREATE UNIQUE INDEX `user.user_roleId_key` ON `user.user`(`roleId`);
-
 -- AddForeignKey
 ALTER TABLE `user.user` ADD CONSTRAINT `user.user_roleId_fkey` FOREIGN KEY (`roleId`) REFERENCES `user.role`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
 -- AddForeignKey
 ALTER TABLE `user.login` ADD CONSTRAINT `user.login_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user.user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 

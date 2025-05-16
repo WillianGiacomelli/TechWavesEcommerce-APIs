@@ -7,6 +7,7 @@ import PersonContactRepository from "../repositories/person/person-contact-repos
 import AddressRepository from "../repositories/address/address-repositorie";
 import AddressComplementRepository from "../repositories/address/address-complement-repositorie";
 import CustomerCreatedModel from "../models/customer/response/customerCreated.model";
+import { CustomerEvent } from "../events/customerEvent";
 
 export default class CustomerService{
     private personRepository: PersonRepository;
@@ -15,6 +16,7 @@ export default class CustomerService{
     private _contactRepository: PersonContactRepository;
     private _addressRepository: AddressRepository;
     private _addressComplementRepository: AddressComplementRepository;
+    private _customerEvent: CustomerEvent;
 
     constructor(){
         this.personRepository = new PersonRepository('user');
@@ -23,6 +25,7 @@ export default class CustomerService{
         this._contactRepository = new PersonContactRepository('contact');
         this._addressRepository = new AddressRepository('address');
         this._addressComplementRepository = new AddressComplementRepository('addressComplement');
+        this._customerEvent = new CustomerEvent();
     }
 
     async createCustomer(data: CustomerCreateModel) : Promise<CustomerCreatedModel> {
@@ -93,7 +96,12 @@ export default class CustomerService{
         userCreatedResponse.id = userCreated.id;
         userCreatedResponse.name = userCreated.name + " " + userCreated.middleName;
         userCreatedResponse.email = data.login.email;
-
+    
+        await this._customerEvent.publishCustomerCreatedEvent(
+            userCreatedResponse.id,
+            userCreatedResponse.name
+        );
+        
         return userCreatedResponse;
     }
 
