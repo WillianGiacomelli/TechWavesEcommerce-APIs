@@ -13,3 +13,43 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Status {
+  id Int @id @default(autoincrement())
+  status Status
+
+  orders Order[]
+
+  @@map("order.status")
+}
+
+model Order{
+  id Int @id @default(autoincrement())
+  userId Int
+  total Float
+  createdAt DateTime @default(now())
+  items OrderItem[]
+
+  statusId
+  Status Status @relation(fields:[statusId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@map("order.order")
+}
+
+model OrderItem{
+  id Int @id @default(autoincrement())
+  productId Int
+  amount Int
+  unitPrice Float
+  createdAt DateTime @default(now())
+  
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+}
+
+enum Status {
+  PENDING
+  PAID
+  SHIPPED
+  CANCELED
+}
