@@ -11,10 +11,12 @@ CREATE TABLE `user.user` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `middleName` VARCHAR(255) NOT NULL,
-    `cpf` VARCHAR(11) NOT NULL,
     `gender` CHAR(2) NOT NULL,
+    `cpf` VARCHAR(11) NOT NULL,
     `birthDate` DATE NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `roleId` INTEGER NOT NULL,
+
 
     UNIQUE INDEX `user.user_cpf_key`(`cpf`),
     PRIMARY KEY (`id`)
@@ -70,11 +72,9 @@ CREATE TABLE `address.complement` (
 ALTER TABLE `user.user` ADD CONSTRAINT `user.user_roleId_fkey` FOREIGN KEY (`roleId`) REFERENCES `user.role`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- AddForeignKey
 ALTER TABLE `user.login` ADD CONSTRAINT `user.login_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user.user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+-- AddForeignKey
 ALTER TABLE `user.contact` ADD CONSTRAINT `user.contact_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user.user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
 -- AddForeignKey
 ALTER TABLE `user.address` ADD CONSTRAINT `user.address_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user.user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
 -- AddForeignKey
 ALTER TABLE `address.complement` ADD CONSTRAINT `address.complement_addressId_fkey` FOREIGN KEY (`addressId`) REFERENCES `user.address`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

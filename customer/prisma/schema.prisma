@@ -20,7 +20,7 @@ model User {
     cpf String @unique @db.VarChar(11)
     gender String @db.Char(2)
     birthDate DateTime @db.Date
-    
+    createdAt DateTime @default(now())
 
     Login Login?
     Contact Contact[]
