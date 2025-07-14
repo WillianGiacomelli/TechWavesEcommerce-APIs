@@ -13,3 +13,63 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model UserRole {
+  id Int @id @default(autoincrement())
+  role Role
+
+  User User[]
+
+  @@map("user.role")
+}
+
+model User {
+    id Int @id
+    name String @db.VarChar(255)
+
+    roleId Int
+    UserRole UserRole @relation(fields:[roleId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+    products Product[]
+
+    @@map("user.user")
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(100) 
+  description String?   @db.Text 
+  products    Product[] @relation("ProductCategory") 
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([name])
+  @@map("product.category")
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(255) // Nome do produto
+  description String?   @db.Text
+  price       Decimal   @db.Decimal(10, 2)
+  stock       Int       @default(0)
+  sku         String?   @unique @db.VarChar(50) 
+  imageUrl    String?   @db.VarChar(500)
+
+  userId      Int 
+  user        User      @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  categories  Category[] @relation("ProductCategory")
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([name, sku])
+  @@map("product.product")
+}
+
+enum Role {
+  MANAGER
+  ADMIN
+}
