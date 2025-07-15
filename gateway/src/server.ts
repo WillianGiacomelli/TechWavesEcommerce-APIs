@@ -3,6 +3,7 @@ import cors from 'cors';
 import customerRouter from "./modules/routes/customer/customer-route";
 import { errorHandler } from "./modules/middlewares/error-handler";
 import healthCheckRouter from "./modules/routes/healtchCheck/health-check-route";
+import productRouter from "./modules/routes/product/product-route";
 require("dotenv").config();
 
 const PORT = process.env.API_PORT;
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use(customerRouter);
+app.use(productRouter);
 app.use(healthCheckRouter);
 
 app.use(errorHandler);

@@ -5,14 +5,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-const customerApiUrl = process.env.CUSTOMER_API_URL;
+const customerApiUrl = process.env.PRODUCT_API_URL ?? 'http://localhost:3003';
 if (!customerApiUrl) {
-  throw new Error('CUSTOMER_API_URL is required');
+  throw new Error('PRODUCT_API_URL is required');
 }
 
-const customerRouter = Router();
+const productRouter = Router();
 
-const customerServiceProxy = httpProxy(customerApiUrl, {
+const productServiceProxy = httpProxy(customerApiUrl, {
   timeout: 10000,
   proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
     return proxyReqOpts;
@@ -26,21 +26,22 @@ const customerServiceProxy = httpProxy(customerApiUrl, {
       res.status(504).json({
         success: false,
         error: 'Gateway Timeout',
-        message: 'The customer service is temporarily unavailable. Please try again later.',
+        message: 'The product service is temporarily unavailable. Please try again later.',
       });
     } else {
       res.status(500).json({
         success: false,
         error: 'Internal Server Error',
-        message: 'An unexpected error occurred while communicating with the customer service.',
+        message: 'An unexpected error occurred while communicating with the product service.',
       });
     }
   },
 });
 
-customerRouter.get('/customer', customerServiceProxy);
-customerRouter.post('/customer', customerServiceProxy);
+productRouter.get('/product', productServiceProxy);
+productRouter.get('/product/category', productServiceProxy);
+productRouter.post('/product', productServiceProxy);
 
-customerRouter.get('/customer/health-check', customerServiceProxy);
+productRouter.get('/product/health-check', productServiceProxy);
 
-export default customerRouter;
+export default productRouter;

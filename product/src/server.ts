@@ -2,6 +2,7 @@ import express from "express";
 import cors from 'cors';
 import "dotenv/config";
 import healthCheckRouter from "./routes/healthCheck/health-check-route";
+import categoryRouter from "./routes/category/category-route";
 const PORT = process.env.API_PORT ?? 3003;
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(cors());
 
 // app.use(customerRouter);
 app.use(healthCheckRouter);
+app.use(categoryRouter);
 
 
 app.listen(PORT, () =>{
