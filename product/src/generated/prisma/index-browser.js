@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.8.2
- * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+ * Prisma Client JS version: 6.12.0
+ * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
  */
 Prisma.prismaVersion = {
-  client: "6.8.2",
-  engine: "2060c79ba17c6bb9f5823312b6f6b7f4a845738e"
+  client: "6.12.0",
+  engine: "8047c96bbd92db98a2abc7c9323ce77c02c89dbc"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -147,9 +147,25 @@ exports.Prisma.ProductScalarFieldEnum = {
   stock: 'stock',
   sku: 'sku',
   imageUrl: 'imageUrl',
-  userId: 'userId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  categoryId: 'categoryId'
+};
+
+exports.Prisma.PromotionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  discountType: 'discountType',
+  discountValue: 'discountValue',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  productId: 'productId'
 };
 
 exports.Prisma.SortOrder = {
@@ -177,16 +193,27 @@ exports.Prisma.ProductOrderByRelevanceFieldEnum = {
   sku: 'sku',
   imageUrl: 'imageUrl'
 };
+
+exports.Prisma.PromotionOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description'
+};
 exports.Role = exports.$Enums.Role = {
   MANAGER: 'MANAGER',
   ADMIN: 'ADMIN'
+};
+
+exports.DiscountType = exports.$Enums.DiscountType = {
+  PERCENTAGE: 'PERCENTAGE',
+  FIXED: 'FIXED'
 };
 
 exports.Prisma.ModelName = {
   UserRole: 'UserRole',
   User: 'User',
   Category: 'Category',
-  Product: 'Product'
+  Product: 'Product',
+  Promotion: 'Promotion'
 };
 
 /**

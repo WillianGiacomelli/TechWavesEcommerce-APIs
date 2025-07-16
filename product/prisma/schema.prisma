@@ -31,6 +31,7 @@ model User {
     UserRole UserRole @relation(fields:[roleId], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
     products Product[]
+    promotion Promotion[]
 
     @@map("user.user")
 }
@@ -39,10 +40,10 @@ model Category {
   id          Int       @id @default(autoincrement())
   name        String    @db.VarChar(100) 
   description String?   @db.Text 
-  products    Product[] @relation("ProductCategory") 
-
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  products    Product[] 
 
   @@index([name])
   @@map("product.category")
@@ -56,17 +57,47 @@ model Product {
   stock       Int       @default(0)
   sku         String?   @unique @db.VarChar(50) 
   imageUrl    String?   @db.VarChar(500)
-
-  userId      Int 
-  user        User      @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-
-  categories  Category[] @relation("ProductCategory")
-
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
+  promotion Promotion[]
+
+  userId      Int 
+  user        User      @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  
+  categoryId      Int 
+  category        Category     @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
   @@index([name, sku])
   @@map("product.product")
+}
+
+model Promotion {
+  id          Int         @id @default(autoincrement())
+  name        String      @db.VarChar(100) 
+  description String?     @db.Text 
+  discountType DiscountType 
+  discountValue Decimal    @db.Decimal(10, 2) 
+  startDate   DateTime    
+  endDate     DateTime    
+  isActive    Boolean     @default(true) 
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  userId      Int         
+  user        User        @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  productId      Int 
+  product       Product     @relation(fields: [productId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([startDate, endDate, isActive]) 
+  @@map("product.promotion")
+}
+
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED
 }
 
 enum Role {
