@@ -5,7 +5,7 @@ export default class CategoryService {
     private categorieRepository: CategoryRepository;
 
     constructor() {
-        this.categorieRepository = new CategoryRepository('categorie');
+        this.categorieRepository = new CategoryRepository('category');
     }
 
     // async createCategory(data: any): Promise<any> {

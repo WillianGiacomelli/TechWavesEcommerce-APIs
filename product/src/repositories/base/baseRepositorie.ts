@@ -1,9 +1,8 @@
 import prisma from "../../database";
 
-type PrismaModelKeys = keyof typeof prisma;
-
 export default class BaseRepository<T> {
-    protected model: PrismaModelKeys;
+
+    protected model: keyof typeof prisma;
 
     constructor(model: keyof typeof prisma) {
         this.model = model;
@@ -15,7 +14,7 @@ export default class BaseRepository<T> {
         });
     }
 
-    async findAll(): Promise<T[]> {
+    async findAll(): Promise<any[]> {
         return await (prisma[this.model] as any).findMany();
     }
 
